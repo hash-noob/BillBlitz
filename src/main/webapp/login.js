@@ -1,173 +1,91 @@
 $(function() {
-            $(".btn").click(function() {
-            $(".form-signin").toggleClass("form-signin-left");
-            $(".form-signup").toggleClass("form-signup-left");
-            $(".frame").toggleClass("frame-long");
-            $(".signup-inactive").toggleClass("signup-active");
-            $(".signin-active").toggleClass("signin-inactive");
-            $(".forgot").toggleClass("forgot-left");   
-            $(this).removeClass("idle").addClass("active");
-            });
-          });
-          
-          $(function() {
-            $(".btn-signup").click(function() {
-          $(".nav").toggleClass("nav-up");
-          $(".form-signup-left").toggleClass("form-signup-down");
-          $(".success").toggleClass("success-left"); 
-          $(".frame").toggleClass("frame-short");
-              register();
-            });
-          });
-          
-          $(function() {
-            $(".btn-signin").click(function() {
-          $(".btn-animate").toggleClass("btn-animate-grow");
-          $(".welcome").toggleClass("welcome-left");
-          $(".cover-photo").toggleClass("cover-photo-down");
-          $(".frame").toggleClass("frame-short");
-          $(".profile-photo").toggleClass("profile-photo-down");
-          $(".btn-goback").toggleClass("btn-goback-up");
-          $(".forgot").toggleClass("forgot-fade");
-            });
-          });
+	$(".btn").click(function() {
+	    $(".form-signin").toggleClass("form-signin-left");
+	    $(".form-signup").toggleClass("form-signup-left");
+	    $(".frame").toggleClass("frame-long");
+	    $(".signup-inactive").toggleClass("signup-active");
+	    $(".signin-active").toggleClass("signin-inactive");
+	    $(".forgot").toggleClass("forgot-left");   
+	    $(this).removeClass("idle").addClass("active");
+    });
+  });
+  
+$(function() {
+	$(".btn-signup").click(function() {
+        if(validateForm()){
+            $(".nav").toggleClass("nav-up");
+            $(".form-signup-left").toggleClass("form-signup-down");
+            $(".success").toggleClass("success-left"); 
+            $(".frame").toggleClass("frame-short");
+        }
+    });
+  });
+  
+  $(function() {
+    $(".btn-signin").click(function() {
+        if(validateForm()){
+            $(".btn-animate").toggleClass("btn-animate-grow");
+            $(".welcome").toggleClass("welcome-left");
+            $(".cover-photo").toggleClass("cover-photo-down");
+            $(".frame").toggleClass("frame-short");
+            $(".profile-photo").toggleClass("profile-photo-down");
+            $(".btn-goback").toggleClass("btn-goback-up");
+            $(".forgot").toggleClass("forgot-fade");
+        }
+    });
+  });
 
+document.addEventListener('DOMContentLoaded', function () {
+        var form = document.querySelector('.form-signup');
 
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
-import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
+        form.addEventListener('submit', function (event) {
+            if (!validateForm()) {
+                event.stopImmediatePropagation(); 
+                event.preventDefault();
+            }
+        });
 
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-apiKey: "AIzaSyBsEQvIeuUWf3oOcD4DUcnqeQWTkFGwJq0",
-authDomain: "user-database-3c73e.firebaseapp.com",
-projectId: "user-database-3c73e",
-storageBucket: "user-database-3c73e.appspot.com",
-messagingSenderId: "297917761223",
-appId: "1:297917761223:web:e393234ccc505d4af2a0e2",
-measurementId: "G-F9R46P3KDX"
-};
+        function validateForm() {
+            var isValid = true;
 
+            var name = document.getElementById('name').value;
+            var email = document.getElementById('email').value;
+            var pass = document.getElementById('pass').value;
+            var cpass = document.getElementById('cpass').value;
 
-console.log("working");
+            if (!isValidUsername(name)) {
+                alert('Invalid full name format. Please use only letters.');
+                isValid = false;
+            }
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const analytics = getAnalytics(app);
+            if (!isValidEmail(email)) {
+                alert('Invalid email format. Please enter a valid email address.');
+                isValid = false;
+            }
 
+            if (!isValidPassword(pass)) {
+                alert('Invalid password format. Password must be greater than 8 characters');
+                isValid = false;
+            }
 
+            if (pass !== cpass) {
+                alert('Password and confirm password do not match.');
+                isValid = false;
+            }
 
-const auth = firebase.auth()
-const database = firebase.database()
+            return isValid;
+        }
 
+        function isValidUsername(username) {
+            return /^[a-zA-Z]+$/.test(username);
+        }
 
+        function isValidEmail(email) {
+            return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+        }
 
-function register(){
+        function isValidPassword(password) {
+            return password.length >= 8;
+        }
+    });
 
-var name = document.getElementById("name").value;
-var email = document.getElementById("email").value;
-var pass = document.getElementById("pass").value;
-var cpass = document.getElementById("cpass").value;
-
-console.log(name + " " + email + " " + pass + " " + cpass);
-
-if(cpass !== pass){
-    alert("Password mismatch");
-    return 
-}
-
-if (validate_email(email) == false || validate_password(password) == false) {
-    alert('Email or Password is Outta Line!!')
-    return
-}
-if (validate_field(name) == false) {
-    alert('One or More Extra Fields is Outta Line!!')
-    return
-}
-    
-auth.createUserWithEmailAndPassword(email, password)
-.then(function() {
-    var user = auth.currentUser
-
-    var database_ref = database.ref()
-
-    var user_data = {
-    email : email,
-    full_name : name,
-    password: pass,
-    last_login : Date.now()
-    }
-
-    database_ref.child('users/' + user.uid).set(user_data)
-
-    alert('User Created!!')
-})
-.catch(function(error) {
-    var error_code = error.code
-    var error_message = error.message
-
-    alert(error_message)
-})
-}
-
-
-
-function login () {
-email = document.getElementById('email').value
-password = document.getElementById('password').value
-
-if (validate_email(email) == false || validate_password(password) == false) {
-    alert('Email or Password is Outta Line!!')
-    return
-}
-auth.signInWithEmailAndPassword(email, password).then(function() {
-    var user = auth.currentUser
-
-    var database_ref = database.ref()
-
-    var user_data = {
-    last_login : Date.now()
-    }
-
-    database_ref.child('users/' + user.uid).update(user_data)
-
-    alert('User Logged In!!')
-
-})
-.catch(function(error) {
-    var error_code = error.code
-    var error_message = error.message
-
-    alert(error_message)
-})
-}
-
-function validate_email(email) {
-expression = /^[^@]+@\w+(\.\w+)+\w$/
-if (expression.test(email) == true) {
-    return true
-} else {
-    return false
-}
-}
-
-function validate_password(password) {
-if (password < 6) {
-    return false
-} else {
-    return true
-}
-}
-
-function validate_field(field) {
-if (field == null) {
-    return false
-}
-if (field.length <= 0) {
-    return false
-} else {
-    return true
-}
-}

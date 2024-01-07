@@ -1,5 +1,3 @@
-
-
 import java.io.*;
 import java.sql.*;
 
@@ -28,24 +26,17 @@ public class Validator extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		out = response.getWriter();
-		out.println("<h2>hello</h2>");
-		out.println("<h2>"+ username +"</h2>");
-		out.println("<h2>"+ password +"</h2>");
+		
 		
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/billblitz","root", "root123");
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("Select * from user where username='"+username+"' and password='"+password + "';");
-			
-			System.out.println(username);
-			System.out.println(password);
-			
-			
-			System.out.println("Select * from user where username='"+username+"' and password='"+password + "';");
-			
+			ResultSet rs = stmt.executeQuery("Select * from testlogin where username='"+username+"' and pass='"+password + "';");
+						
 			if(rs != null) {
+				rs.next();
 				if(rs.getString(3).equals("admin")) {
 					out.println("<h1>Welcome, admin</h1>");
 				}

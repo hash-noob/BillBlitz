@@ -139,7 +139,7 @@ li {
   opacity: 0;
 }
 
-.success {
+/* .success {
   width: 80%;
   height: 150px;
   text-align: center;
@@ -162,7 +162,7 @@ li {
   margin-top: -35px;
   padding-left: 37px;
   padding-right: 37px;
-}
+} */
 
 #check path {
     stroke: #ffffff;
