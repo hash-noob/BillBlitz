@@ -1,3 +1,38 @@
+$(function() {
+            $(".btn").click(function() {
+            $(".form-signin").toggleClass("form-signin-left");
+            $(".form-signup").toggleClass("form-signup-left");
+            $(".frame").toggleClass("frame-long");
+            $(".signup-inactive").toggleClass("signup-active");
+            $(".signin-active").toggleClass("signin-inactive");
+            $(".forgot").toggleClass("forgot-left");   
+            $(this).removeClass("idle").addClass("active");
+            });
+          });
+          
+          $(function() {
+            $(".btn-signup").click(function() {
+          $(".nav").toggleClass("nav-up");
+          $(".form-signup-left").toggleClass("form-signup-down");
+          $(".success").toggleClass("success-left"); 
+          $(".frame").toggleClass("frame-short");
+              register();
+            });
+          });
+          
+          $(function() {
+            $(".btn-signin").click(function() {
+          $(".btn-animate").toggleClass("btn-animate-grow");
+          $(".welcome").toggleClass("welcome-left");
+          $(".cover-photo").toggleClass("cover-photo-down");
+          $(".frame").toggleClass("frame-short");
+          $(".profile-photo").toggleClass("profile-photo-down");
+          $(".btn-goback").toggleClass("btn-goback-up");
+          $(".forgot").toggleClass("forgot-fade");
+            });
+          });
+
+
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/10.7.1/firebase-analytics.js";
 // TODO: Add SDKs for Firebase products that you want to use
@@ -15,6 +50,9 @@ appId: "1:297917761223:web:e393234ccc505d4af2a0e2",
 measurementId: "G-F9R46P3KDX"
 };
 
+
+console.log("working");
+
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
@@ -25,110 +63,111 @@ const auth = firebase.auth()
 const database = firebase.database()
 
 
+
 function register(){
 
-    var name = document.getElementById("name").value;
-    var email = document.getElementById("email").value;
-    var pass = document.getElementById("pass").value;
-    var cpass = document.getElementById("cpass").value;
-    if(cpass !== pass){
-        alert("Password mismatch");
-        return 
-    }
+var name = document.getElementById("name").value;
+var email = document.getElementById("email").value;
+var pass = document.getElementById("pass").value;
+var cpass = document.getElementById("cpass").value;
 
-    if (validate_email(email) == false || validate_password(password) == false) {
-        alert('Email or Password is Outta Line!!')
-        return
-      }
-      if (validate_field(name) == false) {
-        alert('One or More Extra Fields is Outta Line!!')
-        return
-      }
-     
-      auth.createUserWithEmailAndPassword(email, password)
-      .then(function() {
-        var user = auth.currentUser
-    
-        var database_ref = database.ref()
-    
-        var user_data = {
-          email : email,
-          full_name : name,
-          password: pass,
-          last_login : Date.now()
-        }
-    
-        database_ref.child('users/' + user.uid).set(user_data)
-    
-        alert('User Created!!')
-      })
-      .catch(function(error) {
-        var error_code = error.code
-        var error_message = error.message
-    
-        alert(error_message)
-      })
+console.log(name + " " + email + " " + pass + " " + cpass);
+
+if(cpass !== pass){
+    alert("Password mismatch");
+    return 
 }
 
-
-
-function login () {
-  email = document.getElementById('email').value
-  password = document.getElementById('password').value
-
-  if (validate_email(email) == false || validate_password(password) == false) {
+if (validate_email(email) == false || validate_password(password) == false) {
     alert('Email or Password is Outta Line!!')
     return
-  }
-  auth.signInWithEmailAndPassword(email, password).then(function() {
+}
+if (validate_field(name) == false) {
+    alert('One or More Extra Fields is Outta Line!!')
+    return
+}
+    
+auth.createUserWithEmailAndPassword(email, password)
+.then(function() {
     var user = auth.currentUser
 
     var database_ref = database.ref()
 
     var user_data = {
-      last_login : Date.now()
+    email : email,
+    full_name : name,
+    password: pass,
+    last_login : Date.now()
+    }
+
+    database_ref.child('users/' + user.uid).set(user_data)
+
+    alert('User Created!!')
+})
+.catch(function(error) {
+    var error_code = error.code
+    var error_message = error.message
+
+    alert(error_message)
+})
+}
+
+
+
+function login () {
+email = document.getElementById('email').value
+password = document.getElementById('password').value
+
+if (validate_email(email) == false || validate_password(password) == false) {
+    alert('Email or Password is Outta Line!!')
+    return
+}
+auth.signInWithEmailAndPassword(email, password).then(function() {
+    var user = auth.currentUser
+
+    var database_ref = database.ref()
+
+    var user_data = {
+    last_login : Date.now()
     }
 
     database_ref.child('users/' + user.uid).update(user_data)
 
     alert('User Logged In!!')
 
-  })
-  .catch(function(error) {
+})
+.catch(function(error) {
     var error_code = error.code
     var error_message = error.message
 
     alert(error_message)
-  })
+})
 }
 
-
-
-
 function validate_email(email) {
-  expression = /^[^@]+@\w+(\.\w+)+\w$/
-  if (expression.test(email) == true) {
+expression = /^[^@]+@\w+(\.\w+)+\w$/
+if (expression.test(email) == true) {
     return true
-  } else {
+} else {
     return false
-  }
+}
 }
 
 function validate_password(password) {
-  if (password < 6) {
+if (password < 6) {
     return false
-  } else {
+} else {
     return true
-  }
+}
 }
 
 function validate_field(field) {
-  if (field == null) {
+if (field == null) {
     return false
-  }
-  if (field.length <= 0) {
+}
+if (field.length <= 0) {
     return false
-  } else {
+} else {
     return true
-  }
+}
 }
