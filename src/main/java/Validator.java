@@ -28,10 +28,6 @@ public class Validator extends HttpServlet {
 		String password = request.getParameter("password");
 		
 		out = response.getWriter();
-		out.println("<h2>hello</h2>");
-		out.println("<h2>"+ username +"</h2>");
-		out.println("<h2>"+ password +"</h2>");
-		
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
@@ -39,18 +35,14 @@ public class Validator extends HttpServlet {
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery("Select * from user where username='"+username+"' and password='"+password + "';");
 			
-			System.out.println(username);
-			System.out.println(password);
-			
-			
-			System.out.println("Select * from user where username='"+username+"' and password='"+password + "';");
-			
+				
 			if(rs != null) {
 				if(rs.getString(3).equals("admin")) {
 					out.println("<h1>Welcome, admin</h1>");
 				}
 				else {
-					out.println("<h1>Welcome, User</h1>");
+					request.setAttribute("DoesnotExist",1);
+					RequestDispatcher dispatch = request.getRequestDispatcher("/BillBlitz/src/main/webapp/login1.html");
 				}
 			}
 		} catch (Exception e) {
