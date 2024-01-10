@@ -40,11 +40,11 @@ public class Validator extends HttpServlet {
 					out.println("<h1>Welcome, admin</h1>");
 				}
 				else {
-					out.println("<h1>Welcome, user</h1>");
+					RequestDispatcher dispatch = request.getRequestDispatcher("/home.jsp");
+					dispatch.forward(request, response);
 				}
 			}
 		} catch (SQLException | ClassNotFoundException e) {
-			out.println("<h1>Welcome, incorrect password</h1>");
 			request.setAttribute("error","true");
 			RequestDispatcher dispatch = request.getRequestDispatcher("/login.jsp");
 			dispatch.forward(request, response);

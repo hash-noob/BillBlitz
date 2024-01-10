@@ -1,13 +1,3 @@
-import { initializeApp } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-app.js"
-import { getDatabase, ref, push, onValue, remove } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-database.js"
-
-const appSettings = {
-    databaseURL: "https://playground-27c46-default-rtdb.asia-southeast1.firebasedatabase.app/"
-}
-
-const app = initializeApp(appSettings)
-const database = getDatabase(app)
-const billsListInDB = ref(database,"billsList" )
 
 const BillEl = document.getElementById("bill")
 const deadlineEl = document.getElementById("deadline")
@@ -29,23 +19,7 @@ const billsListEl = document.getElementById("billsList")
         clearBillEl()
     })
 
-onValue(billsListInDB, function(snapshot) {
-    if (snapshot.exists()) {
-        let billsArray = Object.entries(snapshot.val())
-        console.log(billsArray)
-        
-        dateConvertor(billsArray)
-        clearbillsListEl()
-        
-        sort(billsArray,0,billsArray.length-1)
-        
-        for (let i = 0; i < billsArray.length; i++) {
-             appendItemTobillsListEl(billsArray[i])
-         }    
-     } else {
-        billsListEl.innerHTML = "No items here... yet"
-     }
-})
+
 
 function clearbillsListEl() {
     billsListEl.innerHTML = ""
@@ -59,25 +33,7 @@ function clearBillEl() {
     BillEl.value = ""
 }
 
-function appendItemTobillsListEl(item) {
-    let itemID = item[0]
-    let itemValue = item[1].bill
-    
-    let newEl = document.createElement("li")
-    
-    newEl.textContent = itemValue
-    
-    newEl.addEventListener("click", function() {
-        let exactLocationOfItemInDB = ref(database, `billsList/${itemID}`)
-        
-        remove(exactLocationOfItemInDB)
-    })
-    
-    newEl.addEventListener("onmouseover",function() {
-        newEl.style.background= "#FF0000"
-    })
-    billsListEl.append(newEl)
-}
+
 
 function dateConvertor(bills){
     for(let i=0;i<bills.length;i++){

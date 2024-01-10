@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@page import="java.sql.*" %>>
 <html>
     <head>
     	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
@@ -12,13 +13,21 @@
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
         <link rel="manifest" href="/site.webmanifest">
         <link rel="stylesheet" href="style.css">
-        <meta charset=ISO-8859-1">
     </head>
     <body>
+    <%
+	    Class.forName("com.mysql.cj.jdbc.Driver");
+		Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/billblitz","root", "kk123");
+		Statement stmt = conn.createStatement();
+		String username = request.getParameter("username");
+		ResultSet rs = stmt.executeQuery("Select * from bills where user='"+username+"';");
+    
+    %>
         <div class="container left">
             <div class="inner-container">
                 <h1>Bill Blitz</h1>
                 <img src="bill.png">
+                <p>Welcome <%=username%></p>
                 <input type="text" id="bill" placeholder="Bill">
                 <input type="datetime-local" id="deadline" placeholder="Deadline"><br>
                 <button id="add-button">Add Bill</button>
@@ -27,6 +36,10 @@
         <div class="container right">
             <div class="bill-container">
                 <ul id="billsList">
+                <% while(rs.next()){
+                	out.println("<li>"+rs.getString(2)+"</li>");	
+                }
+                %>
                 </ul>
             </div>
         </div>
