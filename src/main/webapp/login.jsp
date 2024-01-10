@@ -34,6 +34,9 @@
                         <input type="checkbox" id="checkbox"/>
                         <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>
                         <input type="submit" class="btn-signin">
+                       <% if(request.getAttribute("error")!=null){
+                    	   out.println("<p class=\"error\">Invalid credentials</p>");
+                       }%>
                     </form>
                 
                     <form class="form-signup" action="CreateUser" method="post" name="form">
@@ -48,13 +51,10 @@
                         <input type="submit" class="btn-signup"/>
                     </form>
             
-               
-            
-
-                
+               </div>
+           </div>
         </div>
     </body>
-    
 
 
  

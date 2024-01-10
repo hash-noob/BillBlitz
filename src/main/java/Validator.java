@@ -31,21 +31,23 @@ public class Validator extends HttpServlet {
 		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
-			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/billblitz","root", "root123");
+			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/billblitz","root", "kk123");
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("Select * from user where username='"+username+"' and password='"+password + "';");
-			
-				
-			if(rs != null) {
-				if(rs.getString(3).equals("admin")) {
+			ResultSet rs = stmt.executeQuery("Select * from users where username='"+username+"' and password='"+password + "';");
+			if(rs != null){
+				rs.next();
+				if(rs.getString(3).equals("Admin")) {
 					out.println("<h1>Welcome, admin</h1>");
 				}
 				else {
-					request.setAttribute("DoesnotExist",1);
-					RequestDispatcher dispatch = request.getRequestDispatcher("/BillBlitz/src/main/webapp/login1.html");
+					out.println("<h1>Welcome, user</h1>");
 				}
 			}
-		} catch (Exception e) {
+		} catch (SQLException | ClassNotFoundException e) {
+			out.println("<h1>Welcome, incorrect password</h1>");
+			request.setAttribute("error","true");
+			RequestDispatcher dispatch = request.getRequestDispatcher("/login.jsp");
+			dispatch.forward(request, response);
 			e.printStackTrace();
 		}
     }

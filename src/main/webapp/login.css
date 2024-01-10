@@ -514,3 +514,8 @@ a.btn-goback:hover {
   fill: #1059FF;
   transform: rotate(180deg);
 }
+p.error{
+	font-size:20px;
+  font-style: italic;
+  color: red;
+}
