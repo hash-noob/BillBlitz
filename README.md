@@ -3,7 +3,8 @@ This is my first web project using java. This application intends to make the pr
 
 *MYSQL Schema*
 bills table
-+----------+-------------+------+-----+---------+-------+
+```
++----------+-------------+------+-----+---------+-------+  
 | Field    | Type        | Null | Key | Default | Extra |
 +----------+-------------+------+-----+---------+-------+
 | user     | varchar(20) | YES  |     | NULL    |       |
@@ -11,7 +12,9 @@ bills table
 | deadline | date        | YES  |     | NULL    |       |
 | status   | varchar(20) | YES  |     | NULL    |       |
 +----------+-------------+------+-----+---------+-------+
+```
 users table
+```
 +----------+-------------+------+-----+---------+-------+
 | Field    | Type        | Null | Key | Default | Extra |
 +----------+-------------+------+-----+---------+-------+
@@ -19,6 +22,6 @@ users table
 | password | varchar(20) | YES  |     | NULL    |       |
 | type     | varchar(20) | YES  |     | NULL    |       |
 +----------+-------------+------+-----+---------+-------+
-
+```
 
 **NOTE:** This is just a prototype.Hence, no measures were taken in regards of privacy and security.
