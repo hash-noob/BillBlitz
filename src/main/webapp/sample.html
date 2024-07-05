@@ -1,66 +1,54 @@
+
+
 <html>
     <head>
-        <meta charset="utf-8">
-        <title>Login </title>
-         <!-- Cool Google Fonts -->
-        <link rel="preconnect" href="https://fonts.gstatic.com">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap" rel="stylesheet">
-        <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,700' rel='stylesheet' type='text/css'>
-
-        <link rel="stylesheet" href="login.css">
+    	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+        <title>Add to Cart</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Rubik:wght@300&display=swap" rel="stylesheet">
+        <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+        <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+        <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+        <link rel="manifest" href="/site.webmanifest">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <link rel="stylesheet" href="style.css">
     </head>
-    <body>
-        
-        <div class="container">
-            <div class="frame">
-                <div class="nav">
-                    <ul class="links">
-                        <li class="signin-active"><a class="btn">Sign in</a></li>
-                        <li class="signup-inactive"><a class="btn">Sign up </a></li>
-                    </ul>
-                </div>
-                <div>
-                    <form class="form-signin" action="Validator" method="post" name="form">
-                        <label for="username">Username</label>
-                        <input class="form-styling" type="text" name="username" placeholder=""/>
-                        <label for="password">Password</label>
-                        <input class="form-styling" type="text" name="password" placeholder=""/>
-                        <input type="checkbox" id="checkbox"/>
-                        <label for="checkbox" ><span class="ui"></span>Keep me signed in</label>
-                        <input type="submit" class="btn-signin">
-                      <p class="error">Invalid credentials</p>
-                      
-                    </form>
+    <body >
+        <div class="hidden" id="overlay"></div>
+        <div class="container left">
+            <div class="inner-container">
+                <h1>Bill Blitz</h1>
+                <img src="bill.png">
+                <p>Welcome <%=username%></p>
                 
-                    <form class="form-signup" action="CreateUser" method="post" name="form">
-                        <label for="fullname">Full name</label>
-                        <input class="form-styling" type="text" name="fullname" id="name" placeholder=""/>
-                        <label for="email">Email</label>
-                        <input class="form-styling" type="text" name="email" id="email" placeholder=""/>
-                        <label for="password">Password</label>
-                        <input class="form-styling" type="text" name="password" id="pass" placeholder=""/>
-                        <label for="confirmpassword">Confirm password</label>
-                        <input class="form-styling" type="text" name="confirmpassword" id="cpass" placeholder=""/>
-                        <input type="submit" class="btn-signup"/>
-                    </form>
-            
-               </div>
-           </div>
+	                <input type="text" id="bill" name="bill" placeholder="Bill">
+	                <input type="date" id="deadline" name="deadline" placeholder="Deadline"><br>
+	                <button id="add-button"> Add Bill</button>
+                     
+               
+            </div>
         </div>
+        <div class="popup " id="users">
+            <button id="close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+                <ul>
+                    <label for="user1"><li id="user1">user1</li></label>
+                    <label for="user2"><li id="user2">user1</li></label>
+                    <label for="user3"><li id="user3">user1</li></label>
+                    <label for="user4"><li id="user4">user1</li></label>
+                    <label for="user5"><li id="user5">user1</li></label>
+                    <label for="user6"><li id="user6">user1</li></label>
+                </ul>
+            <button id="done">Done</button>
+        </div>
+        <div class="container right">
+            <div class="bill-container">
+                <ul id="billsList">
+            </div>
+        </div>
+        <script src="index.js" type="module"></script>
     </body>
-    <%
-    System.out.println();
-    %>
-
-
- 
-    
-    <script src="/src/main/webapp/test/index.js"></script>
-
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="login.js" type="module"></script>
-
 </html>
