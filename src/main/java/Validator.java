@@ -1,5 +1,3 @@
-
-
 import java.io.*;
 import java.sql.*;
 
@@ -29,14 +27,17 @@ public class Validator extends HttpServlet {
 		
 		out = response.getWriter();
 		
+		
+		
 		try {
 			Class.forName("com.mysql.cj.jdbc.Driver");
 			Connection conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/billblitz","root", "kk123");
 			Statement stmt = conn.createStatement();
-			ResultSet rs = stmt.executeQuery("Select * from users where username='"+username+"' and password='"+password + "';");
-			if(rs != null){
+			ResultSet rs = stmt.executeQuery("Select * from testlogin where username='"+username+"' and pass='"+password + "';");
+						
+			if(rs != null) {
 				rs.next();
-				if(rs.getString(3).equals("Admin")) {
+				if(rs.getString(3).equals("admin")) {
 					out.println("<h1>Welcome, admin</h1>");
 				}
 				else {

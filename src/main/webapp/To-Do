@@ -1,0 +1,15 @@
+1. Make the User signing error free
+
+    - validate the formats of signup form before sending the request to createuser servlet
+
+2. move the button a bit down in the login form
+
+3. Add an option for users to reset their password, which will send them an email with instructions on how to do so. This should be done using JavaMail API and not any third party libraries like SendGrid or Mailgun. The instructions should include details such as:
+    - what is the new password?
+    - where can they go to change it again if needed?
+
+4. Implement server side validation for all input fields (email, username, etc.)
+
+5. Once logged in, redirect the user to the home page instead of staying at the login page.
+
+6. Create a logout feature that logs out the current user by removing the session attribute "currentUser". Then, display a message saying "You have been logged out."
